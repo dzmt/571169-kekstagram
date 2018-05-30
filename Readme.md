@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Dzmitry Smirnou](https://up.htmlacademy.ru/javascript/14/user/571169).
-* Наставник: `Неизвестно`.
+* Наставник: [Екатерина Кащенко](https://htmlacademy.ru/profile/id109008).
 
 ---
 
