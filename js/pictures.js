@@ -1,5 +1,14 @@
 'use strict';
 
+var EVENT = {
+  CHANGE: 'change',
+  CLICK: 'click',
+  INPUT: 'input',
+  INVALID: 'invalid',
+  KEYDOWN: 'keydown',
+  MOUSEUP: 'mouseup'
+};
+
 var COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -21,6 +30,9 @@ var DESCRIPTIONS = [
 var QUANTITY = 25;
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
+
+var CLASS_NAME_TEXT_HASHTAGS = 'text__hashtags';
+var CLASS_NAME_TEXT_DESCRIPTION = 'text__description';
 
 var getRandomNumber = function (toNumberExcluding) {
   var randomValue = Math.floor(Math.random() * toNumberExcluding);
@@ -166,8 +178,6 @@ var fillElementsBigPicture = function (photoDescription) {
 
 var photoDescriptions = createMockPhotoDesc(QUANTITY);
 addFragmentsToElement(photoDescriptions, '.pictures');
-// fillElementsBigPicture(photoDescriptions[0]);
-// removeClass('.big-picture', 'hidden');
 addClass('.social__comment-count', 'visually-hidden');
 addClass('.social__loadmore', 'visually-hidden');
 
@@ -180,14 +190,15 @@ var resetImgSizePreview = function () {
 };
 
 var overlayCloseEscPressHandler = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  var className = evt.target.className;
+  if (evt.keyCode === ESC_KEYCODE && (className !== CLASS_NAME_TEXT_HASHTAGS) && (className !== CLASS_NAME_TEXT_DESCRIPTION)) {
     closeImgOverlay();
   }
 };
 
 var openImgUploadOverlay = function () {
   removeClass('.img-upload__overlay', 'hidden');
-  document.addEventListener('keydown', overlayCloseEscPressHandler);
+  document.addEventListener(EVENT.KEYDOWN, overlayCloseEscPressHandler);
   resetImgSizePreview();
 };
 
@@ -195,7 +206,7 @@ var closeImgOverlay = function () {
   addClass('.img-upload__overlay', 'hidden');
   var inputUploadFile = getElement(document, '.img-upload__input');
   inputUploadFile.value = '';
-  document.removeEventListener('keydown', overlayCloseEscPressHandler);
+  document.removeEventListener(EVENT.KEYDOWN, overlayCloseEscPressHandler);
 };
 
 var imgUploadInputChangeHandler = function () {
@@ -207,10 +218,10 @@ var imgUploadCancelClickHandler = function () {
 };
 
 var inputUploadFile = getElement(document, '.img-upload__input');
-inputUploadFile.addEventListener('change', imgUploadInputChangeHandler);
+inputUploadFile.addEventListener(EVENT.CHANGE, imgUploadInputChangeHandler);
 
 var imgUploadCancel = getElement(document, '.img-upload__cancel');
-imgUploadCancel.addEventListener('click', imgUploadCancelClickHandler);
+imgUploadCancel.addEventListener(EVENT.CLICK, imgUploadCancelClickHandler);
 
 // toggling effects
 var ID_SELECTOR_RADIO_EFFECTS = [
@@ -258,7 +269,7 @@ var resetEffect = function () {
 
 var hideImgUploadScale = function () {
   var imgUploadScale = getElement(document, '.img-upload__scale');
-  if (!imgUploadScale.classList.contains('hidden')) {
+  if (!imgUploadScale.classList.contains('hidden') || imgUploadPreview.classList.length === 1) {
     addClass('.img-upload__scale', 'hidden');
   }
 };
@@ -306,16 +317,17 @@ var scalePinMouseUpHandler = function () {
   applyFiltersFromScaleValue(getRatioScalePinToScaleLine());
 };
 
-for (var i = 0; i < ID_SELECTOR_RADIO_EFFECTS.length; i++) {
-  var radio = document.querySelector(ID_SELECTOR_RADIO_EFFECTS[i]);
-  radio.addEventListener('change', effectsRadioChangeHandler);
-}
-if (imgUploadPreview.classList.length === 1) {
-  hideImgUploadScale();
-}
+var setEventHandlerToEffectTogglers = function () {
+  for (var i = 0; i < ID_SELECTOR_RADIO_EFFECTS.length; i++) {
+    var radio = document.querySelector(ID_SELECTOR_RADIO_EFFECTS[i]);
+    radio.addEventListener(EVENT.CHANGE, effectsRadioChangeHandler);
+  }
+};
 
+hideImgUploadScale();
+setEventHandlerToEffectTogglers();
 var scalePin = document.querySelector('.scale__pin');
-scalePin.addEventListener('mouseup', scalePinMouseUpHandler);
+scalePin.addEventListener(EVENT.MOUSEUP, scalePinMouseUpHandler);
 
 // photo zoom
 var ZOOM_STEP = 25;
@@ -358,8 +370,8 @@ var resizeControlMinus = document.querySelector('.resize__control--minus');
 var resizeControlPlus = document.querySelector('.resize__control--plus');
 var resizeControlValue = document.querySelector('.resize__control--value');
 
-resizeControlMinus.addEventListener('click', resizeControlMinusClickHandler);
-resizeControlPlus.addEventListener('click', resizeControlPlusHandler);
+resizeControlMinus.addEventListener(EVENT.CLICK, resizeControlMinusClickHandler);
+resizeControlPlus.addEventListener(EVENT.CLICK, resizeControlPlusHandler);
 
 
 // add open and close event handler for big picture element
@@ -388,24 +400,130 @@ var bigPictureOpenEnterPressHandler = function (evt) {
 };
 
 var openBigPictureOverlay = function (fotoDescription) {
-  document.addEventListener('keydown', bigPictureCloseEscPressHandler);
+  document.addEventListener(EVENT.KEYDOWN, bigPictureCloseEscPressHandler);
   fillElementsBigPicture(fotoDescription);
   removeClass('.big-picture', 'hidden');
 };
 
 var closeBigPictureOverlay = function () {
   addClass('.big-picture', 'hidden');
-  document.removeEventListener('keydown', bigPictureCloseEscPressHandler);
+  document.removeEventListener(EVENT.KEYDOWN, bigPictureCloseEscPressHandler);
 };
 
 var setEventHandlerToPictureImgs = function () {
   var pictureImgs = document.querySelectorAll('.picture__img');
   for (var k = 0; k < pictureImgs.length; k++) {
-    pictureImgs[k].addEventListener('click', pictureImgClickHandler);
-    pictureImgs[k].parentElement.addEventListener('keydown', bigPictureOpenEnterPressHandler);
+    pictureImgs[k].addEventListener(EVENT.CLICK, pictureImgClickHandler);
+    pictureImgs[k].parentElement.addEventListener(EVENT.KEYDOWN, bigPictureOpenEnterPressHandler);
   }
 };
 
 var bigPictureCancelButton = document.querySelector('.big-picture__cancel');
-bigPictureCancelButton.addEventListener('click', closeBigPictureOverlay);
+bigPictureCancelButton.addEventListener(EVENT.CLICK, closeBigPictureOverlay);
 setEventHandlerToPictureImgs();
+
+
+// image upload validation form
+var HASHTAG_QUANTITY = 5;
+var HASHTAG_LENGTH = 20;
+
+var CHAR_HASHTAG = '#';
+
+var ERROR_STYLE = '3px solid red';
+var ERROR_CSS_PROPERTY = 'border';
+
+var ERROR_MESSAGE = {
+  beginWithHashtag: 'Хэштег должен начинатся с решетки.',
+  notAnoughlength: 'Хэштег не может состоять только из одной решетки.',
+  divideHashtagBySpace: 'Хэштеги должны разделяться пробелами.',
+  repeatHashtag: 'Хэштеги не должны повторятся (регистр символов не учитывается).',
+  maxHashtagQuantity: 'Нельзя указать больше 5 хэштегов',
+  maxHashtagLength: 'Максимальная длина хэштега 20 символов включая решетку'
+};
+
+var isBeginWithHashtag = function (hashtag) {
+  return hashtag.charAt(0) === CHAR_HASHTAG ? true : false;
+};
+
+var isTooShortHashtag = function (hashtag) {
+  return hashtag.length === 1;
+};
+
+var isContainHashtagInside = function (hashtag) {
+  return hashtag.substr(1).includes(CHAR_HASHTAG);
+};
+
+var isRepeatHashtag = function (hashtag, firstIndex, hashtags) {
+  var lastIndexHashtag = hashtags.lastIndexOf(hashtag);
+  return lastIndexHashtag === firstIndex ? false : true;
+};
+
+var isTooLongHashtagQuantity = function (hashtags, quantity) {
+  return hashtags.length > quantity ? true : false;
+};
+
+var isTooLongHashtagLenght = function (hashtag, length) {
+  return hashtag.length > length ? true : false;
+};
+
+var checkInputHashtag = function (inputHashtag) {
+  var hashtags = inputHashtag.value.toLowerCase().split(' ');
+  var message = '';
+  if (inputHashtag.value) {
+    for (var k = 0; k < hashtags.length; k++) {
+      var hashtag = hashtags[k];
+      if (!isBeginWithHashtag(hashtag)) {
+        message = ERROR_MESSAGE.beginWithHashtag;
+        break;
+      } else if (isTooShortHashtag(hashtag)) {
+        message = ERROR_MESSAGE.notAnoughlength;
+        break;
+      } else if (isContainHashtagInside(hashtag)) {
+        message = ERROR_MESSAGE.divideHashtagBySpace;
+        break;
+      } else if (isRepeatHashtag(hashtag, k, hashtags)) {
+        message = ERROR_MESSAGE.repeatHashtag;
+        break;
+      } else if (isTooLongHashtagQuantity(hashtags, HASHTAG_QUANTITY)) {
+        message = ERROR_MESSAGE.maxHashtagQuantity;
+        break;
+      } else if (isTooLongHashtagLenght(hashtag, HASHTAG_LENGTH)) {
+        message = ERROR_MESSAGE.maxHashtagLength;
+        break;
+      }
+    }
+  }
+  inputHashtag.setCustomValidity(message);
+};
+
+// reset validation message for stopping popup error message when correct hashtags
+var setStyle = function (element, property, style) {
+  element.style[property] = style;
+};
+
+var resetStyle = function (element, property) {
+  element.style[property] = '';
+};
+
+var resetValidationMessage = function (input) {
+  input.setCustomValidity('');
+};
+
+var inputHashtagInputHandler = function (evt) {
+  resetValidationMessage(evt.target);
+  resetStyle(evt.target, ERROR_CSS_PROPERTY);
+};
+
+var inputHashtagChangeHandler = function (evt) {
+  var inputHashtag = evt.target;
+  checkInputHashtag(inputHashtag);
+  inputHashtag.addEventListener(EVENT.INPUT, inputHashtagInputHandler);
+};
+
+var inputHashtagInvalidHandler = function (evt) {
+  setStyle(evt.target, ERROR_CSS_PROPERTY, ERROR_STYLE);
+};
+
+var hashtagInput = document.querySelector('.text__hashtags');
+hashtagInput.addEventListener(EVENT.CHANGE, inputHashtagChangeHandler);
+hashtagInput.addEventListener(EVENT.INVALID, inputHashtagInvalidHandler);
