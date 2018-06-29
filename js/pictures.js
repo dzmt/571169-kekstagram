@@ -53,6 +53,14 @@ var removeClass = function (selector, targetClassName) {
   element.classList.remove(targetClassName);
 };
 
+var setStyle = function (element, property, style) {
+  element.style[property] = style;
+};
+
+var resetStyle = function (element, property) {
+  element.style[property] = '';
+};
+
 var removeChildFromElement = function (element) {
   var children = [];
   for (var i = 0; i < element.children.length; i++) {
@@ -289,18 +297,40 @@ var effectsRadioChangeHandler = function (evt) {
   resetEffect();
 
   // add new effect
+  var scaleLine = document.querySelector('.scale__line');
+  var scalePin = document.querySelector('.scale__pin');
+  var scaleLevel = document.querySelector('.scale__level');
   var effect = evt.target.id.split('-')[1];
   if (effect !== 'none') {
     var classEffect = 'effects__preview--' + effect;
     applyEffect(classEffect);
+    setStyle(scalePin, 'left', scaleLine.offsetWidth + 'px');
+    setStyle(scaleLevel, 'width', scaleLine.offsetWidth + 'px');
   }
 };
 
 // add pin click handler
+var setCoords = function (valueX, valueY) {
+  return {
+    x: valueX,
+    y: valueY
+  };
+};
+
+var calculateShift = function (startX, startY, endX, endY) {
+  var deltaX = endX - startX;
+  var deltaY = endY - startY;
+  return {
+    x: deltaX,
+    y: deltaY
+  };
+};
+
 var getRatioScalePinToScaleLine = function () {
   var scalePin = document.querySelector('.scale__pin');
   var scaleLine = document.querySelector('.scale__line');
-  var ratio = Math.round((scalePin.offsetLeft / scaleLine.offsetWidth) * 1000) / 1000;
+  var scalePinCenterPosition = scalePin.offsetLeft + scalePin.offsetWidth / 2;
+  var ratio = Math.round((scalePinCenterPosition / scaleLine.offsetWidth) * 1000) / 1000;
   return ratio;
 };
 
@@ -313,10 +343,6 @@ var applyFiltersFromScaleValue = function (ratio) {
   }
 };
 
-var scalePinMouseUpHandler = function () {
-  applyFiltersFromScaleValue(getRatioScalePinToScaleLine());
-};
-
 var setEventHandlerToEffectTogglers = function () {
   for (var i = 0; i < ID_SELECTOR_RADIO_EFFECTS.length; i++) {
     var radio = document.querySelector(ID_SELECTOR_RADIO_EFFECTS[i]);
@@ -324,10 +350,42 @@ var setEventHandlerToEffectTogglers = function () {
   }
 };
 
+var translateSliderPin = function (shift) {
+  var scaleLine = document.querySelector('.scale__line');
+  var scaleLevel = document.querySelector('.scale__level');
+  var scalePin = document.querySelector('.scale__pin');
+
+  var offsetLeft = scalePin.offsetLeft + shift.x;
+  var scaleLevelWidth = offsetLeft;
+
+  if ((offsetLeft <= scaleLine.offsetWidth) && (offsetLeft >= 0)) {
+    setStyle(scalePin, 'left', offsetLeft + 'px');
+    setStyle(scaleLevel, 'width', scaleLevelWidth + 'px');
+    applyFiltersFromScaleValue(getRatioScalePinToScaleLine());
+  }
+};
+
+var scalePinMousedownHandler = function (mousedownEvt) {
+  var startCoords = setCoords(mousedownEvt.clientX, mousedownEvt.clientY);
+
+  var mousemoveHandler = function (mousemoveEvt) {
+    var shift = calculateShift(startCoords.x, startCoords.y, mousemoveEvt.clientX, mousemoveEvt.clientY);
+    startCoords = setCoords(mousemoveEvt.x, mousemoveEvt.y);
+    translateSliderPin(shift);
+  };
+  var mouseupHandler = function () {
+    document.removeEventListener('mousemove', mousemoveHandler);
+    document.removeEventListener('mouseup', mouseupHandler);
+  };
+
+  document.addEventListener('mousemove', mousemoveHandler);
+  document.addEventListener('mouseup', mouseupHandler);
+};
+
 hideImgUploadScale();
 setEventHandlerToEffectTogglers();
 var scalePin = document.querySelector('.scale__pin');
-scalePin.addEventListener(EVENT.MOUSEUP, scalePinMouseUpHandler);
+scalePin.addEventListener('mousedown', scalePinMousedownHandler);
 
 // photo zoom
 var ZOOM_STEP = 25;
@@ -497,14 +555,6 @@ var checkInputHashtag = function (inputHashtag) {
 };
 
 // reset validation message for stopping popup error message when correct hashtags
-var setStyle = function (element, property, style) {
-  element.style[property] = style;
-};
-
-var resetStyle = function (element, property) {
-  element.style[property] = '';
-};
-
 var resetValidationMessage = function (input) {
   input.setCustomValidity('');
 };
