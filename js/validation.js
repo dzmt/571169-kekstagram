@@ -1,14 +1,23 @@
 'use strict';
 
 (function () {
-  // image upload validation form
+  var utils = window.utils;
+
   var HASHTAG_QUANTITY = 5;
   var HASHTAG_LENGTH = 20;
+  var HASHTAG_INDEX = 0;
+  var ONE_CHAR_LENGTH = 1;
+  var HASHTAG_INDEX_START_TEXT = 1;
 
+
+  var CHAR_SPLIT_HASHTAG = ' ';
   var CHAR_HASHTAG = '#';
 
   var ERROR_STYLE = '3px solid red';
   var ERROR_CSS_PROPERTY = 'border';
+  var INIT_CUSTOM_VALIDITY_MESSAGE = '';
+
+  var SELECTOR_TEXT_HASHTAGS = '.text__hashtags';
 
   var ERROR_MESSAGE = {
     beginWithHashtag: 'Хэштег должен начинатся с решетки.',
@@ -20,15 +29,15 @@
   };
 
   var isBeginWithHashtag = function (hashtag) {
-    return hashtag.charAt(0) === CHAR_HASHTAG ? true : false;
+    return hashtag.charAt(HASHTAG_INDEX) === CHAR_HASHTAG ? true : false;
   };
 
   var isTooShortHashtag = function (hashtag) {
-    return hashtag.length === 1;
+    return hashtag.length === ONE_CHAR_LENGTH;
   };
 
   var isContainHashtagInside = function (hashtag) {
-    return hashtag.substr(1).includes(CHAR_HASHTAG);
+    return hashtag.substr(HASHTAG_INDEX_START_TEXT).includes(CHAR_HASHTAG);
   };
 
   var isRepeatHashtag = function (hashtag, firstIndex, hashtags) {
@@ -45,11 +54,11 @@
   };
 
   var checkInputHashtag = function (inputHashtag) {
-    var hashtags = inputHashtag.value.toLowerCase().split(' ');
-    var message = '';
+    var hashtags = inputHashtag.value.toLowerCase().split(CHAR_SPLIT_HASHTAG);
+    var message = INIT_CUSTOM_VALIDITY_MESSAGE;
     if (inputHashtag.value) {
-      for (var k = 0; k < hashtags.length; k++) {
-        var hashtag = hashtags[k];
+      for (var i = 0; i < hashtags.length; i++) {
+        var hashtag = hashtags[i];
         if (!isBeginWithHashtag(hashtag)) {
           message = ERROR_MESSAGE.beginWithHashtag;
           break;
@@ -59,7 +68,7 @@
         } else if (isContainHashtagInside(hashtag)) {
           message = ERROR_MESSAGE.divideHashtagBySpace;
           break;
-        } else if (isRepeatHashtag(hashtag, k, hashtags)) {
+        } else if (isRepeatHashtag(hashtag, i, hashtags)) {
           message = ERROR_MESSAGE.repeatHashtag;
           break;
         } else if (isTooLongHashtagQuantity(hashtags, HASHTAG_QUANTITY)) {
@@ -75,12 +84,12 @@
   };
 
   var resetValidationMessage = function (input) {
-    input.setCustomValidity('');
+    input.setCustomValidity(INIT_CUSTOM_VALIDITY_MESSAGE);
   };
 
   var inputHashtagInputHandler = function (evt) {
     resetValidationMessage(evt.target);
-    window.utils.resetStyle(evt.target, ERROR_CSS_PROPERTY);
+    utils.resetStyle(evt.target, ERROR_CSS_PROPERTY);
   };
 
   var inputHashtagChangeHandler = function (evt) {
@@ -90,10 +99,10 @@
   };
 
   var inputHashtagInvalidHandler = function (evt) {
-    window.utils.setStyle(evt.target, ERROR_CSS_PROPERTY, ERROR_STYLE);
+    utils.setStyle(evt.target, ERROR_CSS_PROPERTY, ERROR_STYLE);
   };
 
-  var hashtagInput = document.querySelector(window.enum.SELECTOR.TEXT_HASHTAGS);
+  var hashtagInput = document.querySelector(SELECTOR_TEXT_HASHTAGS);
   hashtagInput.addEventListener(window.enum.EVENT.CHANGE, inputHashtagChangeHandler);
   hashtagInput.addEventListener(window.enum.EVENT.INVALID, inputHashtagInvalidHandler);
 

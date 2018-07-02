@@ -1,10 +1,15 @@
 'use strict';
 
 (function () {
-  var dfTemplate = window.fragment.getFromTemplateTag(window.enum.SELECTOR.HASHTAG_PICTURE);
+  var SELECTOR_TEMPLATE_TAG = '#picture';
+  var SELECTOR_PICTURES_CONTAINER = '.pictures';
 
-  var fragmentList = window.fragment.createListWithData(dfTemplate, window.data);
-  var picturesContainer = document.querySelector(window.enum.SELECTOR.PICTURES);
+  var fragment = window.fragment;
 
-  window.fragment.addToElement(picturesContainer, fragmentList);
+  var dfTemplate = fragment.getFromTemplateTag(SELECTOR_TEMPLATE_TAG);
+
+  var fragmentList = fragment.createListWithData(dfTemplate, window.data);
+  var picturesContainer = document.querySelector(SELECTOR_PICTURES_CONTAINER);
+
+  fragment.addToElement(picturesContainer, fragmentList);
 })();

@@ -8,10 +8,22 @@
 
   var TEXT_CONTENT_INCREASE = 'Увеличить';
 
-  var CONTROL_MINUS = document.querySelector(window.enum.SELECTOR.RESIZE_CONTROL_MINUS);
-  var CONTROL_PLUS = document.querySelector(window.enum.SELECTOR.RESIZE_CONTROL_PLUS);
-  var CONTROL_VALUE = document.querySelector(window.enum.SELECTOR.RESIZE_CONTROL_VALUE);
-  var IMG_UPLOAD_PREVIEW = document.querySelector(window.enum.SELECTOR.IMG_UPLOAD_PREVIEW);
+  var COEFFICIENT_MINUS = -1;
+  var COEFFICIENT_PLUS = 1;
+
+  var DECIMAL_NOTATION = 10;
+  var PERSENT_BASE = 100;
+  var PERSENT_CHAR = '%';
+
+  var SELECTOR_RESIZE_CONTROL_MINUS = '.resize__control--minus';
+  var SELECTOR_RESIZE_CONTROL_PLUS = '.resize__control--plus';
+  var SELECTOR_RESIZE_CONTROL_VALUE = '.resize__control--value';
+  var SELECTOR_IMG_UPLOAD_PREVIEW = '.img-upload__preview';
+
+  var CONTROL_MINUS = document.querySelector(SELECTOR_RESIZE_CONTROL_MINUS);
+  var CONTROL_PLUS = document.querySelector(SELECTOR_RESIZE_CONTROL_PLUS);
+  var CONTROL_VALUE = document.querySelector(SELECTOR_RESIZE_CONTROL_VALUE);
+  var IMG_UPLOAD_PREVIEW = document.querySelector(SELECTOR_IMG_UPLOAD_PREVIEW);
 
   var getScaleFunc = function (value) {
     return 'scale(' + value + ')';
@@ -26,16 +38,16 @@
   };
 
   var parseInputValue = function (value) {
-    var number = Number.parseInt(value, 10);
+    var number = Number.parseInt(value, DECIMAL_NOTATION);
     return number;
   };
 
   var getRatioFromPercentages = function (percentages) {
-    return percentages / 100;
+    return percentages / PERSENT_BASE;
   };
 
   var getPercentagesFrom = function (ratio) {
-    return ratio + '%';
+    return ratio + PERSENT_CHAR;
   };
 
   var getCurrentSize = function (input) {
@@ -63,7 +75,7 @@
 
   var resizeControlClickHandler = function (evt) {
     var step = ZOOM_STEP;
-    var factor = evt.target.textContent === TEXT_CONTENT_INCREASE ? 1 : -1;
+    var factor = evt.target.textContent === TEXT_CONTENT_INCREASE ? COEFFICIENT_PLUS : COEFFICIENT_MINUS;
     step *= factor;
     changeControlValue(step);
   };

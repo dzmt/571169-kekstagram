@@ -1,7 +1,15 @@
 'use strict';
 
 (function () {
+  var utils = window.utils;
+
   var START_INDEX_EFFECT_NAME = 18;
+  var INDEX_CLASS_EFFECT = 1;
+
+  var SELECTOR_PIN = '.scale__pin';
+  var SELECTOR_LEVEL = '.scale__level';
+  var SELECTOR_LINE = '.scale__line';
+  var SELECTOR_IMG_UPLAD_PREVIEW = '.img-upload__preview';
 
   var FILTER_FUNCTIONS = {
     chrome: function (ratio) {
@@ -24,20 +32,27 @@
     }
   };
 
-  var SCALE_PIN = document.querySelector(window.enum.SELECTOR.SCALE_PIN);
-  var SCALE_LINE = document.querySelector(window.enum.SELECTOR.SCALE_LINE);
-  var SCALE_LEVEL = document.querySelector(window.enum.SELECTOR.SCALE_LEVEL);
-  var IMG_UPLOAD_PREVIEW = document.querySelector(window.enum.SELECTOR.IMG_UPLOAD_PREVIEW);
+  var SCALE_PIN = document.querySelector(SELECTOR_PIN);
+  var SCALE_LINE = document.querySelector(SELECTOR_LINE);
+  var SCALE_LEVEL = document.querySelector(SELECTOR_LEVEL);
+  var IMG_UPLOAD_PREVIEW = document.querySelector(SELECTOR_IMG_UPLAD_PREVIEW);
+
+  var START_SLIDER_POSITION = 0;
+
+  var setInitPosition = function (initSliderValue) {
+    utils.translatePin(SCALE_PIN, initSliderValue);
+    utils.changeWidthLevel(SCALE_LEVEL, initSliderValue);
+  };
 
   var getRatioScalePinToScaleLine = function () {
     var scalePinCenterPosition = SCALE_PIN.offsetLeft + SCALE_PIN.offsetWidth / 2;
     var scaleLineWidth = SCALE_LINE.offsetWidth;
-    var ratio = window.utils.getRatioToNumbers(scalePinCenterPosition, scaleLineWidth);
+    var ratio = utils.getRatioToNumbers(scalePinCenterPosition, scaleLineWidth);
     return ratio;
   };
 
   var getEffectClassName = function (element) {
-    var effectClassName = element.classList[1];
+    var effectClassName = element.classList[INDEX_CLASS_EFFECT];
     return effectClassName;
   };
 
@@ -65,17 +80,17 @@
     var offsetLeft = SCALE_PIN.offsetLeft + shift.x;
     var scaleLevelWidth = offsetLeft;
     if ((offsetLeft >= 0) && (offsetLeft <= SCALE_LINE.offsetWidth)) {
-      window.utils.translatePin(SCALE_PIN, offsetLeft);
-      window.utils.changeWidthLevel(SCALE_LEVEL, scaleLevelWidth);
+      utils.translatePin(SCALE_PIN, offsetLeft);
+      utils.changeWidthLevel(SCALE_LEVEL, scaleLevelWidth);
     }
   };
 
   var scalePinMousedownHandler = function (mousedownEvt) {
-    var startCoords = window.utils.setCoords(mousedownEvt.clientX, mousedownEvt.clientY);
+    var startCoords = utils.setCoords(mousedownEvt.clientX, mousedownEvt.clientY);
 
     var mousemoveHandler = function (mousemoveEvt) {
-      var shift = window.utils.calculateShift(startCoords.x, startCoords.y, mousemoveEvt.clientX, mousemoveEvt.clientY);
-      startCoords = window.utils.setCoords(mousemoveEvt.x, mousemoveEvt.y);
+      var shift = utils.calculateShift(startCoords.x, startCoords.y, mousemoveEvt.clientX, mousemoveEvt.clientY);
+      startCoords = utils.setCoords(mousemoveEvt.x, mousemoveEvt.y);
       moveSlider(shift);
       apllyFilterInSliderMotion();
     };
@@ -89,4 +104,15 @@
   };
 
   SCALE_PIN.addEventListener(window.enum.EVENT.MOUSEDOWN, scalePinMousedownHandler);
+
+
+  window.slider = {
+    setSliderStartPosition: function () {
+      setInitPosition(START_SLIDER_POSITION);
+    },
+
+    setSliderEndPosition: function () {
+      setInitPosition(SCALE_LINE.offsetWidth);
+    }
+  };
 })();

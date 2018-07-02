@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var utils = window.utils;
+
   var QUANTITY = 25;
 
   var COMMENTS = [
@@ -21,26 +23,29 @@
     'Вот это тачка!'
   ];
 
+  var IMG_BEGIN_URL = 'photos/';
+  var IMG_END_URL = '.jpg';
+
   window.mock = {
     createUrls: function (quantity) {
       var urls = [];
       for (var i = 1; i <= quantity; i++) {
-        var urlPath = 'photos/' + i + '.jpg';
+        var urlPath = IMG_BEGIN_URL + i + IMG_END_URL;
         urls.push(urlPath);
       }
       return urls;
     },
 
     createRandomLike: function (from, to) {
-      var valueOfLikes = from + window.utils.getRandomNumber(to);
+      var valueOfLikes = from + utils.getRandomNumber(to);
       return valueOfLikes;
     },
 
     createRandomComments: function (seed) {
       var comments = [];
-      comments.push(COMMENTS[window.utils.getRandomNumber(COMMENTS.length - 1)]);
-      if (window.utils.isEvenNumber(seed)) {
-        comments.push(COMMENTS[window.utils.getRandomNumber(COMMENTS.length - 1)]);
+      comments.push(COMMENTS[utils.getRandomNumber(COMMENTS.length - 1)]);
+      if (utils.isEvenNumber(seed)) {
+        comments.push(COMMENTS[utils.getRandomNumber(COMMENTS.length - 1)]);
       }
       return comments;
     },
@@ -53,7 +58,7 @@
         itemPhotoDescription.url = urls[i];
         itemPhotoDescription.likes = this.createRandomLike(15, 200);
         itemPhotoDescription.comments = this.createRandomComments(i);
-        itemPhotoDescription.description = DESCRIPTIONS[window.utils.getRandomNumber(DESCRIPTIONS.length - 1)];
+        itemPhotoDescription.description = DESCRIPTIONS[utils.getRandomNumber(DESCRIPTIONS.length - 1)];
         photos.push(itemPhotoDescription);
       }
       return photos;

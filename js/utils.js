@@ -11,6 +11,11 @@
 
   var MEASURING_PX = 'px';
 
+  var MARKER_CONTAING_EFFCT_CLASS = 2;
+  var PROPERTY_FILTER = 'filter';
+  var CLASS_IMG_UPLOAD_PREVIEW = 'img-upload__preview';
+  var SELECTOR_IMG_UPLOAD_SCALE = '.img-upload__scale';
+
   window.utils = {
     getRandomNumber: function (max) {
       var randomValue = Math.ceil(Math.random() * max);
@@ -106,12 +111,12 @@
     },
 
     hideImgUploadScale: function () {
-      var imgUploadScale = document.querySelector(window.enum.SELECTOR.IMG_UPLOAD_SCALE);
+      var imgUploadScale = document.querySelector(SELECTOR_IMG_UPLOAD_SCALE);
       this.hideElement(imgUploadScale);
     },
 
     showImgUploadScale: function () {
-      var imgUploadScale = document.querySelector(window.enum.SELECTOR.IMG_UPLOAD_SCALE);
+      var imgUploadScale = document.querySelector(SELECTOR_IMG_UPLOAD_SCALE);
       this.showElement(imgUploadScale);
     },
 
@@ -123,6 +128,18 @@
     changeWidthLevel: function (level, offsetWidth) {
       var offsetWidthValue = offsetWidth + MEASURING_PX;
       window.utils.setStyle(level, PROPERTY_WIDTH, offsetWidthValue);
+    },
+
+    hasEffectClassUploadPreview: function (imgUploadPreview) {
+      var countClass = imgUploadPreview.classList.length;
+      return countClass >= MARKER_CONTAING_EFFCT_CLASS ? true : false;
+    },
+
+    resetPreviousEffect: function (imgUploadPreview) {
+      this.resetStyle(imgUploadPreview, PROPERTY_FILTER);
+      if (this.hasEffectClassUploadPreview(imgUploadPreview)) {
+        imgUploadPreview.className = CLASS_IMG_UPLOAD_PREVIEW;
+      }
     }
   };
 })();
