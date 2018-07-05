@@ -70,5 +70,13 @@
 
   var imgUploadCancel = document.querySelector(SELECTOR_IMG_UPLOAD_CANCEL);
   imgUploadCancel.addEventListener(window.enum.EVENT.CLICK, imgUploadCancelClickHandler);
+
+
+  window.upload = {
+    close: function () {
+      closeImgOverlay();
+    }
+  };
+
 })();
 

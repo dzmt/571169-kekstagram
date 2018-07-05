@@ -17,8 +17,8 @@
   var SELECTOR_IMG_UPLOAD_SCALE = '.img-upload__scale';
 
   window.utils = {
-    getRandomNumber: function (max) {
-      var randomValue = Math.ceil(Math.random() * max);
+    getRandomNumber: function (number) {
+      var randomValue = Math.floor(Math.random() * number);
       return randomValue;
     },
 

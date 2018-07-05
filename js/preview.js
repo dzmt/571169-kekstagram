@@ -50,7 +50,7 @@
   };
 
   var createRandomAvatarUrl = function () {
-    var avatarIndex = utils.getRandomNumber(6);
+    var avatarIndex = utils.getRandomNumber(6) + 1;
     var avatarUrl = AVATAR_BEGIN_URL + avatarIndex + AVATAR_END_URL;
     return avatarUrl;
   };

@@ -68,7 +68,7 @@
     element.style.filter = filterFunction;
   };
 
-  var apllyFilterInSliderMotion = function () {
+  var applyFilterInSliderMotion = function () {
     var effectClassName = getEffectClassName(IMG_UPLOAD_PREVIEW);
     var effectName = getEffectName(effectClassName);
     var ratio = getRatioScalePinToScaleLine();
@@ -92,7 +92,7 @@
       var shift = utils.calculateShift(startCoords.x, startCoords.y, mousemoveEvt.clientX, mousemoveEvt.clientY);
       startCoords = utils.setCoords(mousemoveEvt.x, mousemoveEvt.y);
       moveSlider(shift);
-      apllyFilterInSliderMotion();
+      applyFilterInSliderMotion();
     };
     var mouseupHandler = function () {
       document.removeEventListener(window.enum.EVENT.MOUSEMOVE, mousemoveHandler);

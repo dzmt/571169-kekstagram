@@ -26,39 +26,39 @@
   var IMG_BEGIN_URL = 'photos/';
   var IMG_END_URL = '.jpg';
 
+  var createUrls = function (quantity) {
+    var urls = [];
+    for (var i = 1; i <= quantity; i++) {
+      var urlPath = IMG_BEGIN_URL + i + IMG_END_URL;
+      urls.push(urlPath);
+    }
+    return urls;
+  };
+
+  var createRandomLike = function (from, to) {
+    var valueOfLikes = from + utils.getRandomNumber(to);
+    return valueOfLikes;
+  };
+
+  var createRandomComments = function (seed) {
+    var comments = [];
+    comments.push(COMMENTS[utils.getRandomNumber(COMMENTS.length)]);
+    if (utils.isEvenNumber(seed)) {
+      comments.push(COMMENTS[utils.getRandomNumber(COMMENTS.length)]);
+    }
+    return comments;
+  };
+
   window.mock = {
-    createUrls: function (quantity) {
-      var urls = [];
-      for (var i = 1; i <= quantity; i++) {
-        var urlPath = IMG_BEGIN_URL + i + IMG_END_URL;
-        urls.push(urlPath);
-      }
-      return urls;
-    },
-
-    createRandomLike: function (from, to) {
-      var valueOfLikes = from + utils.getRandomNumber(to);
-      return valueOfLikes;
-    },
-
-    createRandomComments: function (seed) {
-      var comments = [];
-      comments.push(COMMENTS[utils.getRandomNumber(COMMENTS.length - 1)]);
-      if (utils.isEvenNumber(seed)) {
-        comments.push(COMMENTS[utils.getRandomNumber(COMMENTS.length - 1)]);
-      }
-      return comments;
-    },
-
     createMockPhotos: function () {
       var photos = [];
-      var urls = this.createUrls(QUANTITY);
+      var urls = createUrls(QUANTITY);
       for (var i = 0; i < QUANTITY; i++) {
         var itemPhotoDescription = {};
         itemPhotoDescription.url = urls[i];
-        itemPhotoDescription.likes = this.createRandomLike(15, 200);
-        itemPhotoDescription.comments = this.createRandomComments(i);
-        itemPhotoDescription.description = DESCRIPTIONS[utils.getRandomNumber(DESCRIPTIONS.length - 1)];
+        itemPhotoDescription.likes = createRandomLike(15, 200);
+        itemPhotoDescription.comments = createRandomComments(i);
+        itemPhotoDescription.description = DESCRIPTIONS[utils.getRandomNumber(DESCRIPTIONS.length)];
         photos.push(itemPhotoDescription);
       }
       return photos;

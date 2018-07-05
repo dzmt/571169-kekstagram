@@ -10,7 +10,8 @@
       KEYDOWN: 'keydown',
       MOUSEDOWN: 'mousedown',
       MOUSEMOVE: 'mousemove',
-      MOUSEUP: 'mouseup'
+      MOUSEUP: 'mouseup',
+      SUBMIT: 'submit'
     }
   };
 })();
