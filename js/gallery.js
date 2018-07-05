@@ -6,10 +6,23 @@
 
   var fragment = window.fragment;
 
-  var dfTemplate = fragment.getFromTemplateTag(SELECTOR_TEMPLATE_TAG);
+  var renderGallery = function (data) {
+    var dfTemplate = fragment.getFromTemplateTag(SELECTOR_TEMPLATE_TAG);
 
-  var fragmentList = fragment.createListWithData(dfTemplate, window.data);
-  var picturesContainer = document.querySelector(SELECTOR_PICTURES_CONTAINER);
+    var fragmentList = fragment.createListWithData(dfTemplate, data);
+    var picturesContainer = document.querySelector(SELECTOR_PICTURES_CONTAINER);
 
-  fragment.addToElement(picturesContainer, fragmentList);
+    fragment.addToElement(picturesContainer, fragmentList);
+  };
+
+  var onLoad = function (data) {
+    renderGallery(data);
+    window.data = data;
+  };
+
+  var onError = function (message) {
+    window.error.render(message);
+  };
+
+  window.backend.load(onLoad, onError);
 })();

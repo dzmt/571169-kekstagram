@@ -2,6 +2,7 @@
 
 (function () {
   var utils = window.utils;
+  var EVENT = window.enum.EVENT;
 
   var HASHTAG_QUANTITY = 5;
   var HASHTAG_LENGTH = 20;
@@ -18,6 +19,7 @@
   var INIT_CUSTOM_VALIDITY_MESSAGE = '';
 
   var SELECTOR_TEXT_HASHTAGS = '.text__hashtags';
+  var SELECTOR_FORM = '#upload-select-image';
 
   var ERROR_MESSAGE = {
     beginWithHashtag: 'Хэштег должен начинатся с решетки.',
@@ -95,15 +97,43 @@
   var inputHashtagChangeHandler = function (evt) {
     var inputHashtag = evt.target;
     checkInputHashtag(inputHashtag);
-    inputHashtag.addEventListener(window.enum.EVENT.INPUT, inputHashtagInputHandler);
+    inputHashtag.addEventListener(EVENT.INPUT, inputHashtagInputHandler);
   };
 
   var inputHashtagInvalidHandler = function (evt) {
     utils.setStyle(evt.target, ERROR_CSS_PROPERTY, ERROR_STYLE);
   };
 
-  var hashtagInput = document.querySelector(SELECTOR_TEXT_HASHTAGS);
-  hashtagInput.addEventListener(window.enum.EVENT.CHANGE, inputHashtagChangeHandler);
-  hashtagInput.addEventListener(window.enum.EVENT.INVALID, inputHashtagInvalidHandler);
+  var addHashtagsEventListener = function () {
+    var hashtagInput = document.querySelector(SELECTOR_TEXT_HASHTAGS);
+    hashtagInput.addEventListener(EVENT.CHANGE, inputHashtagChangeHandler);
+    hashtagInput.addEventListener(EVENT.INVALID, inputHashtagInvalidHandler);
+  };
 
+  var onLoad = function () {
+    window.upload.close();
+  };
+
+  var onError = function (message) {
+    window.error.render(message);
+  };
+
+  var getFormData = function (form) {
+    var formData = new FormData(form);
+    return formData;
+  };
+
+  var formSubmitHandler = function (evt) {
+    evt.preventDefault();
+    var formData = getFormData(evt.target);
+    window.backend.save(formData, onLoad, onError);
+  };
+
+  var addFormEventListener = function () {
+    var form = document.querySelector(SELECTOR_FORM);
+    form.addEventListener(EVENT.SUBMIT, formSubmitHandler);
+  };
+
+  addHashtagsEventListener();
+  addFormEventListener();
 })();
