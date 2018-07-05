@@ -76,6 +76,7 @@
     close: function () {
       closeImgOverlay();
     }
-  }
+  };
+
 })();
 

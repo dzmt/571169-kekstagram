@@ -6,14 +6,6 @@
   var SELECTOR_PICTURE_STAT_COMMENTS = '.picture__stat--comments';
   var SELECTOR_PICTURE_LINK = '.picture__link';
 
-  var createWithElements = function (elements) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < elements.length; i++) {
-      fragment.appendChild(elements[i]);
-    }
-    return fragment;
-  };
-
   var clone = function (documentFragment) {
     var cloneDocumentFragment = documentFragment.cloneNode(true);
     return cloneDocumentFragment;
