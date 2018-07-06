@@ -87,6 +87,8 @@
   utils.addClass(SELECTOR_LOADMORE, CLASS_VISIALLY_HIDDEN);
 
   window.preview = {
-    fill: fillPreview
+    fill: function (picture) {
+      fillPreview(picture);
+    }
   };
 })();
