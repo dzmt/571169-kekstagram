@@ -28,7 +28,7 @@
   var AVATAR_BEGIN_URL = 'img/avatar-';
   var AVATAR_END_URL = '.svg';
 
-  var createEmptyDocumentFragmentCommentItem = function () {
+  var createDocumentFragmentCommentItem = function () {
     var liSocialComment = utils.createElementWithClass(TAG_NAME_LI, CLASS_SOCIAL_COMMENT);
     var imgSocialPicture = utils.createElementWithClass(TAG_NAME_IMG, CLASS_SOCIAL_PICTURE);
     var pSocialText = utils.createElementWithClass(TAG_NAME_P, CLASS_SOCIAL_TEXT);
@@ -55,15 +55,15 @@
     return avatarUrl;
   };
 
-  var createSocialCommentElements = function (comments) {
-    var itemSocialComments = [];
-    for (var i = 0; i < comments.length; i++) {
-      var dfSocialCommentItem = createEmptyDocumentFragmentCommentItem();
+  var createSocialCommentElements = function (pictureComments) {
+    var commentElements = [];
+    pictureComments.forEach(function (comment) {
+      var dfSocialCommentItem = createDocumentFragmentCommentItem();
       var avatarUrl = createRandomAvatarUrl();
-      fillDFSocialCommentItem(dfSocialCommentItem, avatarUrl, comments[i]);
-      itemSocialComments.push(dfSocialCommentItem);
-    }
-    return itemSocialComments;
+      fillDFSocialCommentItem(dfSocialCommentItem, avatarUrl, comment);
+      commentElements.push(dfSocialCommentItem);
+    });
+    return commentElements;
   };
 
   var fillPreview = function (picture) {

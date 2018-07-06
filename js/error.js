@@ -17,33 +17,28 @@
     whiteSpce: 'nowrap'
   };
 
-  var REFRESH_PAGE = ' Please, try again.';
+  var ADVISE_MESSAGE = ' Please, try again.';
 
   var TAG_NAME_DIV = 'div';
 
-  var createElement = function (tagNameElement) {
-    var element = document.createElement(tagNameElement);
-    return element;
-  };
-
-  var setErrorStyle = function (element, style) {
-    for (var property in style) {
-      if (style.hasOwnProperty(property)) {
-        utils.setStyle(element, property, style[property]);
+  var setErrorStyle = function (element, styles) {
+    for (var property in styles) {
+      if (styles.hasOwnProperty(property)) {
+        utils.setStyle(element, property, styles[property]);
       }
     }
   };
 
   var setTextContent = function (element, text) {
-    element.textContent = text + REFRESH_PAGE;
+    element.textContent = text + ADVISE_MESSAGE;
   };
 
   window.error = {
-    render: function (message) {
-      var error = createElement(TAG_NAME_DIV);
+    render: function (message, targetElement) {
+      var error = document.createElement(TAG_NAME_DIV);
       setTextContent(error, message);
       setErrorStyle(error, ERROR_STYLE);
-      document.body.appendChild(error);
+      targetElement.appendChild(error);
     }
   };
 })();

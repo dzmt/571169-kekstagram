@@ -6,12 +6,7 @@
   var SELECTOR_PICTURE_STAT_COMMENTS = '.picture__stat--comments';
   var SELECTOR_PICTURE_LINK = '.picture__link';
 
-  var clone = function (documentFragment) {
-    var cloneDocumentFragment = documentFragment.cloneNode(true);
-    return cloneDocumentFragment;
-  };
-
-  var addEventListener = function (img, link, photo) {
+  var addEventListenerToPane = function (img, link, photo) {
     var openClickHandler = window.picture.getOpenClickHadler(photo);
     var openEnterPressHandler = window.picture.getOpenEnterPressHandler(photo);
 
@@ -31,7 +26,7 @@
 
     var link = documentFragment.querySelector(SELECTOR_PICTURE_LINK);
 
-    addEventListener(img, link, photo);
+    addEventListenerToPane(img, link, photo);
   };
 
   window.fragment = {
@@ -41,18 +36,18 @@
 
     createListWithData: function (documentFragmentTemplate, photos) {
       var documentFragments = [];
-      for (var i = 0; i < photos.length; i++) {
-        var cloneDocumentFragment = clone(documentFragmentTemplate);
-        fillData(cloneDocumentFragment, photos[i]);
+      photos.forEach(function (photo) {
+        var cloneDocumentFragment = documentFragmentTemplate.cloneNode(true);
+        fillData(cloneDocumentFragment, photo);
         documentFragments.push(cloneDocumentFragment);
-      }
+      });
       return documentFragments;
     },
 
     addToElement: function (element, documentFragments) {
-      for (var i = 0; i < documentFragments.length; i++) {
-        element.appendChild(documentFragments[i]);
-      }
+      documentFragments.forEach(function (fragment) {
+        element.appendChild(fragment);
+      });
     }
   };
 })();

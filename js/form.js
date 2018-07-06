@@ -115,7 +115,7 @@
   };
 
   var onError = function (message) {
-    window.error.render(message);
+    window.error.render(message, document.body);
   };
 
   var getFormData = function (form) {

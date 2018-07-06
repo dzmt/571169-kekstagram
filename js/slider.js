@@ -11,6 +11,13 @@
   var SELECTOR_LINE = '.scale__line';
   var SELECTOR_IMG_UPLAD_PREVIEW = '.img-upload__preview';
 
+  var SCALE_PIN = document.querySelector(SELECTOR_PIN);
+  var SCALE_LINE = document.querySelector(SELECTOR_LINE);
+  var SCALE_LEVEL = document.querySelector(SELECTOR_LEVEL);
+  var IMG_UPLOAD_PREVIEW = document.querySelector(SELECTOR_IMG_UPLAD_PREVIEW);
+
+  var START_SLIDER_POSITION = 0;
+
   var FILTER_FUNCTIONS = {
     chrome: function (ratio) {
       return 'grayscale(' + ratio + ')';
@@ -31,13 +38,6 @@
       return 'brightness(' + valueOfEffect + ')';
     }
   };
-
-  var SCALE_PIN = document.querySelector(SELECTOR_PIN);
-  var SCALE_LINE = document.querySelector(SELECTOR_LINE);
-  var SCALE_LEVEL = document.querySelector(SELECTOR_LEVEL);
-  var IMG_UPLOAD_PREVIEW = document.querySelector(SELECTOR_IMG_UPLAD_PREVIEW);
-
-  var START_SLIDER_POSITION = 0;
 
   var setInitPosition = function (initSliderValue) {
     utils.translatePin(SCALE_PIN, initSliderValue);

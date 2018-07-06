@@ -2,6 +2,7 @@
 
 (function () {
   var utils = window.utils;
+  var EVENT = window.enum.EVENT;
 
   var CLASS_TEXT_HASHTAGS = 'text__hashtags';
   var CLASS_TEXT_DESCRIPTION = 'text__description';
@@ -37,24 +38,22 @@
   };
 
   var overlayCloseEscPressHandler = function (evt) {
-
     if (utils.isEscKeyCode(evt.keyCode)
         && !evt.target.classList.contains(CLASS_TEXT_HASHTAGS)
         && !evt.target.classList.contains(CLASS_TEXT_DESCRIPTION)) {
-
       closeImgOverlay();
     }
   };
 
   var openImgUploadOverlay = function () {
     setInitialUploadUIState();
-    document.addEventListener(window.enum.EVENT.KEYDOWN, overlayCloseEscPressHandler);
+    document.addEventListener(EVENT.KEYDOWN, overlayCloseEscPressHandler);
   };
 
   var closeImgOverlay = function () {
     utils.hideElement(IMG_UPLOAD_OVERLAY);
     utils.resetInputTypeFile(SELECTOR_IMG_UPLOAD_INPUT);
-    document.removeEventListener(window.enum.EVENT.KEYDOWN, overlayCloseEscPressHandler);
+    document.removeEventListener(EVENT.KEYDOWN, overlayCloseEscPressHandler);
   };
 
   var imgUploadInputChangeHandler = function () {
@@ -66,10 +65,10 @@
   };
 
   var inputUploadFile = document.querySelector(SELECTOR_IMG_UPLOAD_INPUT);
-  inputUploadFile.addEventListener(window.enum.EVENT.CHANGE, imgUploadInputChangeHandler);
+  inputUploadFile.addEventListener(EVENT.CHANGE, imgUploadInputChangeHandler);
 
   var imgUploadCancel = document.querySelector(SELECTOR_IMG_UPLOAD_CANCEL);
-  imgUploadCancel.addEventListener(window.enum.EVENT.CLICK, imgUploadCancelClickHandler);
+  imgUploadCancel.addEventListener(EVENT.CLICK, imgUploadCancelClickHandler);
 
 
   window.upload = {

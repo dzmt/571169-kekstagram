@@ -37,7 +37,7 @@
     input.value = value;
   };
 
-  var parseInputValue = function (value) {
+  var getNumberFromInputValue = function (value) {
     var number = Number.parseInt(value, DECIMAL_NOTATION);
     return number;
   };
@@ -52,7 +52,7 @@
 
   var getCurrentSize = function (input) {
     var curentScaleString = getInputValue(input);
-    var currentSize = parseInputValue(curentScaleString);
+    var currentSize = getNumberFromInputValue(curentScaleString);
     return currentSize;
   };
 
