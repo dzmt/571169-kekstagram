@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var utils = window.utils;
-
   var TAG_NAME_LI = 'li';
   var TAG_NAME_P = 'p';
   var TAG_NAME_IMG = 'img';
@@ -22,11 +20,12 @@
   var SELECTOR_SOCIAL_COMMENTS = '.social__comments';
   var SELECTOR_SOCIAL_COMMENTS_COUNT = '.social__comment-count';
   var SELECTOR_LOADMORE = '.social__loadmore';
-
-  var BIG_PICTURE_CONTAINER = document.querySelector(SELECTOR_BIG_PICTURE_CONTAINER);
-
   var AVATAR_BEGIN_URL = 'img/avatar-';
   var AVATAR_END_URL = '.svg';
+
+  var utils = window.utils;
+
+  var BIG_PICTURE_CONTAINER = document.querySelector(SELECTOR_BIG_PICTURE_CONTAINER);
 
   var createDocumentFragmentCommentItem = function () {
     var liSocialComment = utils.createElementWithClass(TAG_NAME_LI, CLASS_SOCIAL_COMMENT);

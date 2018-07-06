@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  var utils = window.utils;
-  var EVENT = window.enum.EVENT;
-
   var HASHTAG_QUANTITY = 5;
   var HASHTAG_LENGTH = 20;
   var HASHTAG_INDEX = 0;
@@ -29,6 +26,9 @@
     maxHashtagQuantity: 'Нельзя указать больше 5 хэштегов',
     maxHashtagLength: 'Максимальная длина хэштега 20 символов включая решетку'
   };
+
+  var utils = window.utils;
+  var EVENT = window.enum.EVENT;
 
   var isBeginWithHashtag = function (hashtag) {
     return hashtag.charAt(HASHTAG_INDEX) === CHAR_HASHTAG ? true : false;

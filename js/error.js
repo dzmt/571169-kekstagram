@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var utils = window.utils;
-
   var ERROR_STYLE = {
     position: 'absolute',
     top: 0,
@@ -20,6 +18,8 @@
   var ADVISE_MESSAGE = ' Please, try again.';
 
   var TAG_NAME_DIV = 'div';
+
+  var utils = window.utils;
 
   var setErrorStyle = function (element, styles) {
     for (var property in styles) {

@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var utils = window.utils;
-
   var CLASS_EFFECT = {
     chrome: 'effects__preview--chrome',
     sepia: 'effects__preview--sepia',
@@ -10,6 +8,8 @@
     phobos: 'effects__preview--phobos',
     heat: 'effects__preview--heat'
   };
+
+  var utils = window.utils;
 
   var SELECTOR_IMG_UPLOAD_PREVIEW = '.img-upload__preview';
   var SELECTOR_TOGGLERS = '.effects__radio';

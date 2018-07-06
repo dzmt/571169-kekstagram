@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  var gallery = window.gallery;
-  var EVENT = window.enum.EVENT;
-
   var SELECTOR_FILTER_BUTTON = '.img-filters__button';
 
   var ACTIVE_CLASS = 'img-filters__button--active';
@@ -30,6 +27,9 @@
       return popPhotos;
     }
   };
+
+  var gallery = window.gallery;
+  var EVENT = window.enum.EVENT;
 
   var toggleClassBetweenElements = function (target, activeClass) {
     var currentActiveElement = document.querySelector('.' + activeClass);
