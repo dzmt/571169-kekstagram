@@ -29,7 +29,7 @@
   };
 
   var EVENT = window.enum.EVENT;
-  
+
   var gallery = window.gallery;
 
   var toggleClassBetweenElements = function (target, activeClass) {
