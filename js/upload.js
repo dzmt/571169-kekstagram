@@ -16,11 +16,12 @@
   var SELECTOR_IMG_UPLOAD_INPUT = '.img-upload__input';
   var SELECTOR_IMG_UPLOAD_CANCEL = '.img-upload__cancel';
 
-  var utils = window.utils;
-  var EVENT = window.enum.EVENT;
-
   var IMG_UPLOAD_OVERLAY = document.querySelector(SELECTOR_IMG_UPLOAD_OVERLAY);
   var IMG_UPLOAD_PREVIEW = IMG_UPLOAD_OVERLAY.querySelector(SELECTOR_IMG_UPLOAD_PREVIEW);
+
+  var EVENT = window.enum.EVENT;
+
+  var utils = window.utils;
 
   var resetImgSizePreview = function (originalValue) {
     var controlValue = document.querySelector(SELECTOR_RESIZE_CONTROL_VALUE);

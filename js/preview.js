@@ -23,9 +23,9 @@
   var AVATAR_BEGIN_URL = 'img/avatar-';
   var AVATAR_END_URL = '.svg';
 
-  var utils = window.utils;
-
   var BIG_PICTURE_CONTAINER = document.querySelector(SELECTOR_BIG_PICTURE_CONTAINER);
+
+  var utils = window.utils;
 
   var createDocumentFragmentCommentItem = function () {
     var liSocialComment = utils.createElementWithClass(TAG_NAME_LI, CLASS_SOCIAL_COMMENT);
