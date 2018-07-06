@@ -7,9 +7,9 @@
 
   var CLASS_INNACTIVE_FILTERS = 'img-filters--inactive';
 
-  var fragment = window.fragment;
-
   var INIT_COUNT_ELEMENT = 2;
+
+  var fragment = window.fragment;
 
   var removeChildren = function (element, from) {
     var length = element.children.length - from;

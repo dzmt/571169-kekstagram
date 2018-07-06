@@ -1,12 +1,12 @@
 'use strict';
 
 (function () {
-  var utils = window.utils;
-  var EVENT = window.enum.EVENT;
-
   var SELECTOR_BIG_PICTURE = '.big-picture';
   var SELECTOR_CANCEL_BUTTON = '.big-picture__cancel';
   var BIG_PICTURE = document.querySelector(SELECTOR_BIG_PICTURE);
+
+  var utils = window.utils;
+  var EVENT = window.enum.EVENT;
 
   var bigPictureCloseEscPressHandler = function (evt) {
     if (utils.isEscKeyCode(evt.keyCode)) {

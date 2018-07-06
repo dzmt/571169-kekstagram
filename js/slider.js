@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var utils = window.utils;
-
   var START_INDEX_EFFECT_NAME = 18;
   var INDEX_CLASS_EFFECT = 1;
 
@@ -38,6 +36,8 @@
       return 'brightness(' + valueOfEffect + ')';
     }
   };
+
+  var utils = window.utils;
 
   var setInitPosition = function (initSliderValue) {
     utils.translatePin(SCALE_PIN, initSliderValue);
