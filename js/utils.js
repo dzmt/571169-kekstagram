@@ -11,7 +11,9 @@
 
   var MEASURING_PX = 'px';
 
-  var MARKER_CONTAING_EFFCT_CLASS = 2;
+  var RESET_VALUE = '';
+
+  var MARKER_CONTAING_EFFECT_CLASS = 2;
   var PROPERTY_FILTER = 'filter';
   var CLASS_IMG_UPLOAD_PREVIEW = 'img-upload__preview';
   var SELECTOR_IMG_UPLOAD_SCALE = '.img-upload__scale';
@@ -70,7 +72,7 @@
     },
 
     resetStyle: function (element, property) {
-      element.style[property] = '';
+      element.style[property] = RESET_VALUE;
     },
 
     removeChildrenElement: function (element) {
@@ -102,12 +104,12 @@
     },
 
     resetElementProperty: function (element, property) {
-      element[property] = '';
+      element[property] = RESET_VALUE;
     },
 
     resetInputTypeFile: function (selectorInput) {
       var input = document.querySelector(selectorInput);
-      input.value = '';
+      input.value = RESET_VALUE;
     },
 
     hideImgUploadScale: function () {
@@ -132,7 +134,7 @@
 
     hasEffectClassUploadPreview: function (imgUploadPreview) {
       var countClass = imgUploadPreview.classList.length;
-      return countClass >= MARKER_CONTAING_EFFCT_CLASS ? true : false;
+      return countClass >= MARKER_CONTAING_EFFECT_CLASS ? true : false;
     },
 
     resetPreviousEffect: function (imgUploadPreview) {

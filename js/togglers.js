@@ -12,13 +12,13 @@
   };
 
   var SELECTOR_IMG_UPLOAD_PREVIEW = '.img-upload__preview';
-  var SELECTOR_EFFECTS_RADIO = '.effects__radio';
+  var SELECTOR_TOGGLERS = '.effects__radio';
 
   var ID_RADIO_EFFECT_NONE = 'effect-none';
   var INDEX_START_EFFECT_NAME = 7;
 
   var IMG_UPLOAD_PREVIEW = document.querySelector(SELECTOR_IMG_UPLOAD_PREVIEW);
-  var TOGGLERS = document.querySelectorAll(SELECTOR_EFFECTS_RADIO);
+  var TOGGLERS = document.querySelectorAll(SELECTOR_TOGGLERS);
 
   var applyEffect = function (classEffect) {
     IMG_UPLOAD_PREVIEW.classList.add(classEffect);
@@ -29,14 +29,22 @@
   };
 
   var resetTogglers = function () {
-    for (var i = 0; i < TOGGLERS.length; i++) {
-      var toogler = TOGGLERS[i];
+    TOGGLERS.forEach(function (toggler) {
       var checked = false;
-      if (toogler.id === ID_RADIO_EFFECT_NONE) {
+      if (toggler.id === ID_RADIO_EFFECT_NONE) {
         checked = true;
       }
-      toogler.checked = checked;
-    }
+      toggler.checked = checked;
+    });
+  };
+
+  var setInitState = function (toggler) {
+    utils.showImgUploadScale();
+    window.slider.setSliderEndPosition();
+    var radioEffect = toggler;
+    var effectName = getNameEffect(radioEffect);
+    var classEffect = CLASS_EFFECT[effectName];
+    applyEffect(classEffect);
   };
 
   var effectsRadioChangeHandler = function (evt) {
@@ -45,21 +53,15 @@
     if (evt.target.id === ID_RADIO_EFFECT_NONE) {
       utils.hideImgUploadScale();
     } else {
-      utils.showImgUploadScale();
-      window.slider.setSliderEndPosition();
-      var radioEffect = evt.target;
-      var effectName = getNameEffect(radioEffect);
-      var classEffect = CLASS_EFFECT[effectName];
-      applyEffect(classEffect);
+      setInitState(evt.target);
     }
   };
 
   var setEventHandlerToEffectTogglers = function () {
-    for (var i = 0; i < TOGGLERS.length; i++) {
-      var radio = TOGGLERS[i];
+    TOGGLERS.forEach(function (toggler) {
       resetTogglers();
-      radio.addEventListener(window.enum.EVENT.CHANGE, effectsRadioChangeHandler);
-    }
+      toggler.addEventListener(window.enum.EVENT.CHANGE, effectsRadioChangeHandler);
+    });
   };
 
   setEventHandlerToEffectTogglers();

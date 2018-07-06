@@ -2,6 +2,7 @@
 
 (function () {
   var utils = window.utils;
+  var EVENT = window.enum.EVENT;
 
   var SELECTOR_BIG_PICTURE = '.big-picture';
   var SELECTOR_CANCEL_BUTTON = '.big-picture__cancel';
@@ -14,19 +15,26 @@
   };
 
   var openBigPictureOverlay = function (fotoDescription) {
-    document.addEventListener(window.enum.EVENT.KEYDOWN, bigPictureCloseEscPressHandler);
+    document.addEventListener(EVENT.KEYDOWN, bigPictureCloseEscPressHandler);
     window.preview.fill(fotoDescription);
     utils.showElement(BIG_PICTURE);
   };
 
   var closeBigPictureOverlay = function () {
     utils.hideElement(BIG_PICTURE);
-    document.removeEventListener(window.enum.EVENT.KEYDOWN, bigPictureCloseEscPressHandler);
+    document.removeEventListener(EVENT.KEYDOWN, bigPictureCloseEscPressHandler);
   };
 
   var bigPictureCancelClickHandler = function () {
     closeBigPictureOverlay();
   };
+
+  var addEventListener = function (elementSelector, event, handler) {
+    var element = document.querySelector(elementSelector);
+    element.addEventListener(event, handler);
+  };
+
+  addEventListener(SELECTOR_CANCEL_BUTTON, EVENT.CLICK, bigPictureCancelClickHandler);
 
   window.picture = {
     getOpenClickHadler: function (picture) {
@@ -43,7 +51,4 @@
       };
     }
   };
-
-  var bigPictureCancelButton = document.querySelector(SELECTOR_CANCEL_BUTTON);
-  bigPictureCancelButton.addEventListener(window.enum.EVENT.CLICK, bigPictureCancelClickHandler);
 })();
