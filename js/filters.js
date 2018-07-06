@@ -28,8 +28,9 @@
     }
   };
 
-  var gallery = window.gallery;
   var EVENT = window.enum.EVENT;
+
+  var gallery = window.gallery;
 
   var toggleClassBetweenElements = function (target, activeClass) {
     var currentActiveElement = document.querySelector('.' + activeClass);

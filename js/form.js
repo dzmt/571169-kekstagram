@@ -27,8 +27,9 @@
     maxHashtagLength: 'Максимальная длина хэштега 20 символов включая решетку'
   };
 
-  var utils = window.utils;
   var EVENT = window.enum.EVENT;
+
+  var utils = window.utils;
 
   var isBeginWithHashtag = function (hashtag) {
     return hashtag.charAt(HASHTAG_INDEX) === CHAR_HASHTAG ? true : false;

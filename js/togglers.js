@@ -9,8 +9,6 @@
     heat: 'effects__preview--heat'
   };
 
-  var utils = window.utils;
-
   var SELECTOR_IMG_UPLOAD_PREVIEW = '.img-upload__preview';
   var SELECTOR_TOGGLERS = '.effects__radio';
 
@@ -19,6 +17,8 @@
 
   var IMG_UPLOAD_PREVIEW = document.querySelector(SELECTOR_IMG_UPLOAD_PREVIEW);
   var TOGGLERS = document.querySelectorAll(SELECTOR_TOGGLERS);
+
+  var utils = window.utils;
 
   var applyEffect = function (classEffect) {
     IMG_UPLOAD_PREVIEW.classList.add(classEffect);

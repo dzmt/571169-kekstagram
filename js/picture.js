@@ -5,8 +5,9 @@
   var SELECTOR_CANCEL_BUTTON = '.big-picture__cancel';
   var BIG_PICTURE = document.querySelector(SELECTOR_BIG_PICTURE);
 
-  var utils = window.utils;
   var EVENT = window.enum.EVENT;
+
+  var utils = window.utils;
 
   var bigPictureCloseEscPressHandler = function (evt) {
     if (utils.isEscKeyCode(evt.keyCode)) {
