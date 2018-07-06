@@ -13,7 +13,6 @@
 
   var DECIMAL_NOTATION = 10;
   var PERSENT_BASE = 100;
-  var PERSENT_CHAR = '%';
 
   var SELECTOR_RESIZE_CONTROL_MINUS = '.resize__control--minus';
   var SELECTOR_RESIZE_CONTROL_PLUS = '.resize__control--plus';
@@ -47,7 +46,7 @@
   };
 
   var getPercentagesFrom = function (ratio) {
-    return ratio + PERSENT_CHAR;
+    return ratio + '%';
   };
 
   var getCurrentSize = function (input) {

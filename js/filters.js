@@ -7,7 +7,6 @@
   var SELECTOR_FILTER_BUTTON = '.img-filters__button';
 
   var ACTIVE_CLASS = 'img-filters__button--active';
-  var DOT = '.';
 
   var SORT_FUNC_FROM_ID = {
     'filter-popular': function (data) {
@@ -33,7 +32,7 @@
   };
 
   var toggleClassBetweenElements = function (target, activeClass) {
-    var currentActiveElement = document.querySelector(DOT + activeClass);
+    var currentActiveElement = document.querySelector('.' + activeClass);
     currentActiveElement.classList.toggle(activeClass);
     target.classList.toggle(activeClass);
   };
