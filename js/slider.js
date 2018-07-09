@@ -19,7 +19,7 @@
   var SCALE_LEVEL = document.querySelector(SELECTOR_LEVEL);
   var IMG_UPLOAD_PREVIEW = document.querySelector(SELECTOR_IMG_UPLAD_PREVIEW);
 
-  var FILTER_FUNCTIONS = {
+  var FILTER_NAME_TO_FUNCTION = {
     chrome: function (ratio) {
       return 'grayscale(' + ratio + ')';
     },
@@ -73,8 +73,8 @@
     return className.substr(START_INDEX_EFFECT_NAME);
   };
 
-  var getFilterFunction = function (effect, ratio) {
-    return FILTER_FUNCTIONS[effect](ratio);
+  var getFilterFunction = function (filterName, ratio) {
+    return FILTER_NAME_TO_FUNCTION[filterName](ratio);
   };
 
   var applyFilter = function (element, filterFunction) {
