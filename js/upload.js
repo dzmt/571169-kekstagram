@@ -15,6 +15,7 @@
   var SELECTOR_RESIZE_CONTROL_VALUE = '.resize__control--value';
   var SELECTOR_IMG_UPLOAD_INPUT = '.img-upload__input';
   var SELECTOR_IMG_UPLOAD_CANCEL = '.img-upload__cancel';
+  var SELECTOR_FORM_UPLOAD = '#upload-select-image';
 
   var IMG_UPLOAD_OVERLAY = document.querySelector(SELECTOR_IMG_UPLOAD_OVERLAY);
   var IMG_UPLOAD_PREVIEW = IMG_UPLOAD_OVERLAY.querySelector(SELECTOR_IMG_UPLOAD_PREVIEW);
@@ -48,12 +49,16 @@
   var openImgUploadOverlay = function () {
     setInitialUploadUIState();
     document.addEventListener(EVENT.KEYDOWN, overlayCloseEscPressHandler);
+    window.validation.addEventListener();
+    window.form.addEventListener();
   };
 
   var closeImgOverlay = function () {
     utils.hideElement(IMG_UPLOAD_OVERLAY);
-    utils.resetInputTypeFile(SELECTOR_IMG_UPLOAD_INPUT);
+    utils.resetForm(SELECTOR_FORM_UPLOAD);
     document.removeEventListener(EVENT.KEYDOWN, overlayCloseEscPressHandler);
+    window.validation.removeEventListener();
+    window.form.removeEventListener();
   };
 
   var imgUploadInputChangeHandler = function () {

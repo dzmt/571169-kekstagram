@@ -11,8 +11,8 @@
     },
 
     'filter-new': function () {
-      var newestPhotos = window.data.slice().reverse();
-      return newestPhotos;
+      var newestPhotos = window.utils.getShuffledArray(window.data);
+      return newestPhotos.slice(0, 10);
     },
 
     'filter-discussed': function () {
@@ -30,17 +30,18 @@
 
   var EVENT = window.enum.EVENT;
 
-  var gallery = window.gallery;
+  var render = window.debounce(window.gallery.render);
 
   var toggleClassBetweenElements = function (target, activeClass) {
-    var currentActiveElement = document.querySelector('.' + activeClass);
-    currentActiveElement.classList.toggle(activeClass);
-    target.classList.toggle(activeClass);
+    if (!target.classList.contains(activeClass)) {
+      var currentActiveElement = document.querySelector('.' + activeClass);
+      currentActiveElement.classList.toggle(activeClass);
+      target.classList.toggle(activeClass);
+    }
   };
 
   var buttonClickHandler = function (evt) {
     var sortData = SORT_FUNC_FROM_ID[evt.target.id](window.data);
-    var render = window.debounce(gallery.render, sortData);
     render(sortData);
     toggleClassBetweenElements(evt.target, ACTIVE_CLASS);
   };

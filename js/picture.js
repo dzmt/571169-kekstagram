@@ -3,6 +3,8 @@
 (function () {
   var SELECTOR_BIG_PICTURE = '.big-picture';
   var SELECTOR_CANCEL_BUTTON = '.big-picture__cancel';
+
+  var MODAL_OPEN_CLASS = 'modal-open';
   var BIG_PICTURE = document.querySelector(SELECTOR_BIG_PICTURE);
 
   var EVENT = window.enum.EVENT;
@@ -19,11 +21,13 @@
     document.addEventListener(EVENT.KEYDOWN, bigPictureCloseEscPressHandler);
     window.preview.fill(fotoDescription);
     utils.showElement(BIG_PICTURE);
+    document.body.classList.toggle(MODAL_OPEN_CLASS);
   };
 
   var closeBigPictureOverlay = function () {
     utils.hideElement(BIG_PICTURE);
     document.removeEventListener(EVENT.KEYDOWN, bigPictureCloseEscPressHandler);
+    document.body.classList.toggle(MODAL_OPEN_CLASS);
   };
 
   var bigPictureCancelClickHandler = function () {

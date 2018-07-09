@@ -4,6 +4,11 @@
   var START_INDEX_EFFECT_NAME = 18;
   var INDEX_CLASS_EFFECT = 1;
 
+  var PROPERTY_LEFT = 'left';
+  var PROPERTY_WIDTH = 'width';
+
+  var MEASURING_PX = 'px';
+
   var SELECTOR_PIN = '.scale__pin';
   var SELECTOR_LEVEL = '.scale__level';
   var SELECTOR_LINE = '.scale__line';
@@ -13,8 +18,6 @@
   var SCALE_LINE = document.querySelector(SELECTOR_LINE);
   var SCALE_LEVEL = document.querySelector(SELECTOR_LEVEL);
   var IMG_UPLOAD_PREVIEW = document.querySelector(SELECTOR_IMG_UPLAD_PREVIEW);
-
-  var START_SLIDER_POSITION = 0;
 
   var FILTER_FUNCTIONS = {
     chrome: function (ratio) {
@@ -39,15 +42,25 @@
 
   var utils = window.utils;
 
-  var setInitPosition = function (initSliderValue) {
-    utils.translatePin(SCALE_PIN, initSliderValue);
-    utils.changeWidthLevel(SCALE_LEVEL, initSliderValue);
+  var translatePin = function (pin, offsetLeft) {
+    var translateValue = offsetLeft + MEASURING_PX;
+    window.utils.setStyle(pin, PROPERTY_LEFT, translateValue);
+  };
+
+  var changeWidthLevel = function (level, offsetWidth) {
+    var offsetWidthValue = offsetWidth + MEASURING_PX;
+    window.utils.setStyle(level, PROPERTY_WIDTH, offsetWidthValue);
+  };
+
+  var setPosition = function (position) {
+    translatePin(SCALE_PIN, position);
+    changeWidthLevel(SCALE_LEVEL, position);
   };
 
   var getRatioScalePinToScaleLine = function () {
-    var scalePinCenterPosition = SCALE_PIN.offsetLeft + SCALE_PIN.offsetWidth / 2;
+    var scalePinCenterPosition = SCALE_PIN.offsetLeft;
     var scaleLineWidth = SCALE_LINE.offsetWidth;
-    var ratio = utils.getRatioToNumbers(scalePinCenterPosition, scaleLineWidth);
+    var ratio = utils.getRatioOfNumbers(scalePinCenterPosition, scaleLineWidth);
     return ratio;
   };
 
@@ -80,8 +93,8 @@
     var offsetLeft = SCALE_PIN.offsetLeft + shift.x;
     var scaleLevelWidth = offsetLeft;
     if ((offsetLeft >= 0) && (offsetLeft <= SCALE_LINE.offsetWidth)) {
-      utils.translatePin(SCALE_PIN, offsetLeft);
-      utils.changeWidthLevel(SCALE_LEVEL, scaleLevelWidth);
+      translatePin(SCALE_PIN, offsetLeft);
+      changeWidthLevel(SCALE_LEVEL, scaleLevelWidth);
     }
   };
 
@@ -107,12 +120,8 @@
 
 
   window.slider = {
-    setSliderStartPosition: function () {
-      setInitPosition(START_SLIDER_POSITION);
-    },
-
     setSliderEndPosition: function () {
-      setInitPosition(SCALE_LINE.offsetWidth);
+      setPosition(SCALE_LINE.offsetWidth);
     }
   };
 })();

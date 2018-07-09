@@ -6,11 +6,6 @@
 
   var CLASS_HIDDEN = 'hidden';
 
-  var PROPERTY_LEFT = 'left';
-  var PROPERTY_WIDTH = 'width';
-
-  var MEASURING_PX = 'px';
-
   var RESET_VALUE = '';
 
   var MARKER_CONTAING_EFFECT_CLASS = 2;
@@ -22,10 +17,6 @@
     getRandomNumber: function (number) {
       var randomValue = Math.floor(Math.random() * number);
       return randomValue;
-    },
-
-    isEvenNumber: function (number) {
-      return (number % 2 === 0) ? true : false;
     },
 
     setCoords: function (valueX, valueY) {
@@ -44,17 +35,29 @@
       };
     },
 
-    getRatioToNumbers: function (numerator, denominator) {
+    getRatioOfNumbers: function (numerator, denominator) {
       var ratio = Math.round((numerator / denominator) * 1000) / 1000;
       return ratio;
     },
 
     isEscKeyCode: function (keyCode) {
-      return ESC_KEY_CODE === keyCode ? true : false;
+      return ESC_KEY_CODE === keyCode;
     },
 
     isEnterKeyCode: function (keyCode) {
-      return ENTER_KEY_CODE === keyCode ? true : false;
+      return ENTER_KEY_CODE === keyCode;
+    },
+
+    getShuffledArray: function (array) {
+      var originArray = array.slice();
+      var shuffledArray = [];
+      for (var i = 0; i < array.length; i++) {
+        var length = originArray.length;
+        var randomIndex = this.getRandomNumber(length);
+        var randomItem = originArray.splice(randomIndex, 1)[0];
+        shuffledArray.push(randomItem);
+      }
+      return shuffledArray;
     },
 
     addClass: function (elementSelector, targetClass) {
@@ -103,13 +106,9 @@
       element[property] = value;
     },
 
-    resetElementProperty: function (element, property) {
-      element[property] = RESET_VALUE;
-    },
-
-    resetInputTypeFile: function (selectorInput) {
-      var input = document.querySelector(selectorInput);
-      input.value = RESET_VALUE;
+    resetForm: function (formSelector) {
+      var form = document.querySelector(formSelector);
+      form.reset();
     },
 
     hideImgUploadScale: function () {
@@ -122,19 +121,10 @@
       this.showElement(imgUploadScale);
     },
 
-    translatePin: function (pin, offsetLeft) {
-      var translateValue = offsetLeft + MEASURING_PX;
-      window.utils.setStyle(pin, PROPERTY_LEFT, translateValue);
-    },
-
-    changeWidthLevel: function (level, offsetWidth) {
-      var offsetWidthValue = offsetWidth + MEASURING_PX;
-      window.utils.setStyle(level, PROPERTY_WIDTH, offsetWidthValue);
-    },
 
     hasEffectClassUploadPreview: function (imgUploadPreview) {
       var countClass = imgUploadPreview.classList.length;
-      return countClass >= MARKER_CONTAING_EFFECT_CLASS ? true : false;
+      return countClass >= MARKER_CONTAING_EFFECT_CLASS;
     },
 
     resetPreviousEffect: function (imgUploadPreview) {

@@ -20,6 +20,7 @@
   var SELECTOR_SOCIAL_COMMENTS = '.social__comments';
   var SELECTOR_SOCIAL_COMMENTS_COUNT = '.social__comment-count';
   var SELECTOR_LOADMORE = '.social__loadmore';
+
   var AVATAR_BEGIN_URL = 'img/avatar-';
   var AVATAR_END_URL = '.svg';
 
