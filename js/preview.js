@@ -28,6 +28,7 @@
 
   var BIG_PICTURE_CONTAINER = document.querySelector(SELECTOR_BIG_PICTURE_CONTAINER);
   var COMMENTS_CONTAINER = BIG_PICTURE_CONTAINER.querySelector(SELECTOR_SOCIAL_COMMENTS);
+  var LOAD_MORE_BUTTON = BIG_PICTURE_CONTAINER.querySelector(SELECTOR_LOADMORE);
 
   var utils = window.utils;
 
@@ -75,9 +76,7 @@
   };
 
   var resetBigPicture = function () {
-    var loadMoreButton = document.querySelector(SELECTOR_LOADMORE);
-
-    loadMoreButton.classList.remove(CLASS_HIDDEN);
+    LOAD_MORE_BUTTON.classList.remove(CLASS_HIDDEN);
     utils.removeChildrenElement(COMMENTS_CONTAINER);
   };
 
@@ -95,14 +94,12 @@
   };
 
   var renderComments = function (comments) {
-    var loadMoreButton = document.querySelector(SELECTOR_LOADMORE);
-
     var commentsQuantity = comments.length;
     var showedCommentCount = 0;
 
     if (commentsQuantity <= BASE_NEXT_COMMENTS) {
       showedCommentCount = comments.length;
-      loadMoreButton.classList.add(CLASS_HIDDEN);
+      LOAD_MORE_BUTTON.classList.add(CLASS_HIDDEN);
     } else {
       showedCommentCount = BASE_NEXT_COMMENTS;
 
@@ -115,8 +112,8 @@
           end = showedCommentCount + BASE_NEXT_COMMENTS;
         } else if (rest >= 0) {
           end = showedCommentCount + rest;
-          loadMoreButton.classList.add(CLASS_HIDDEN);
-          loadMoreButton.removeEventListener(window.enum.EVENT.CLICK, loadMoreClickHandler);
+          LOAD_MORE_BUTTON.classList.add(CLASS_HIDDEN);
+          LOAD_MORE_BUTTON.removeEventListener(window.enum.EVENT.CLICK, loadMoreClickHandler);
         }
 
         currentRenderComments = comments.slice(showedCommentCount, end);
@@ -124,7 +121,7 @@
         renderCommentTextAndCounter(currentRenderComments, showedCommentCount, commentsQuantity);
       };
 
-      loadMoreButton.addEventListener(window.enum.EVENT.CLICK, loadMoreClickHandler);
+      LOAD_MORE_BUTTON.addEventListener(window.enum.EVENT.CLICK, loadMoreClickHandler);
     }
     var renderedComments = comments.slice(0, showedCommentCount);
     renderCommentTextAndCounter(renderedComments, showedCommentCount, commentsQuantity);
