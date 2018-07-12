@@ -50,11 +50,11 @@
   };
 
   var isTooLongHashtagQuantity = function (hashtags, quantity) {
-    return hashtags.length > quantity ? true : false;
+    return hashtags.length > quantity;
   };
 
   var isTooLongHashtagLenght = function (hashtag, length) {
-    return hashtag.length > length ? true : false;
+    return hashtag.length > length;
   };
 
   var checkInputHashtag = function (inputHashtag) {
