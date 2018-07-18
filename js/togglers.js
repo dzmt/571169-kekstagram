@@ -40,7 +40,7 @@
 
   var setInitState = function (toggler) {
     utils.showImgUploadScale();
-    window.slider.setSliderEndPosition();
+    window.slider.setEndPosition();
     var radioEffect = toggler;
     var effectName = getNameEffect(radioEffect);
     var classEffect = CLASS_EFFECT[effectName];
